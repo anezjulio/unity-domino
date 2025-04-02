@@ -4,18 +4,18 @@ public partial class BoardSystem : SystemBase
 {
     private Entity GetBoardEntity(EntityManager entityManager)
     {
-        EntityQuery boardQuery = entityManager.CreateEntityQuery(typeof(Board));
+        EntityQuery boardQuery = entityManager.CreateEntityQuery(typeof(BoardComponent));
         return boardQuery.IsEmpty ? Entity.Null : boardQuery.GetSingletonEntity();
     }
 
-    private void AddTileToBoard(EntityManager entityManager, Entity boardEntity, Tile newTile, Entity previousTileEntity)
+    private void AddTileToBoard(EntityManager entityManager, Entity boardEntity, TileComponent newTile, Entity previousTileEntity)
     {
         if (boardEntity == Entity.Null) return;
 
-        DynamicBuffer<TileNode> boardTiles = entityManager.GetBuffer<TileNode>(boardEntity);
+        DynamicBuffer<TileNodeComponent> boardTiles = entityManager.GetBuffer<TileNodeComponent>(boardEntity);
 
         // Crear un nuevo nodo de ficha
-        TileNode newNode = new TileNode
+        TileNodeComponent newNode = new TileNodeComponent
         {
             tile = newTile,
             previousTile = previousTileEntity, // Establecer el nodo anterior
@@ -25,7 +25,7 @@ public partial class BoardSystem : SystemBase
         // Si hay un nodo anterior, establecer su "nextTile" al nuevo nodo
         if (previousTileEntity != Entity.Null)
         {
-            var previousTileNode = entityManager.GetBuffer<TileNode>(previousTileEntity);
+            var previousTileNode = entityManager.GetBuffer<TileNodeComponent>(previousTileEntity);
             previousTileNode[previousTileNode.Length - 1] = newNode; // Actualizar el nodo anterior
         }
 

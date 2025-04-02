@@ -4,9 +4,9 @@ using Unity.Collections;
 public partial class TileSystem : SystemBase {
 
     // Función para mezclar las piezas
-    private NativeArray<Tile> ShuffleTiles()
+    private NativeArray<TileComponent> ShuffleTiles()
     {
-        NativeArray<Tile> allTiles = new NativeArray<Tile>(28, Allocator.TempJob);
+        NativeArray<TileComponent> allTiles = new NativeArray<TileComponent>(28, Allocator.TempJob);
 
         // Crear todas las fichas (por ejemplo, 0-0, 0-1, ..., 6-6)
         int index = 0;
@@ -14,7 +14,7 @@ public partial class TileSystem : SystemBase {
         {
             for (int j = i; j <= 6; j++)
             {
-                allTiles[index++] = new Tile { aSide = i, bSide = j };
+                allTiles[index++] = new TileComponent { aSide = i, bSide = j };
             }
         }
 
@@ -25,7 +25,7 @@ public partial class TileSystem : SystemBase {
         {
             n--;
             int k = rng.Next(n + 1);
-            Tile value = allTiles[k];
+            TileComponent value = allTiles[k];
             allTiles[k] = allTiles[n];
             allTiles[n] = value;
         }
