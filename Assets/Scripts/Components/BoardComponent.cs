@@ -3,6 +3,8 @@ using Unity.Entities;
 
 public struct BoardComponent : IComponentData
 {
-    public DynamicBuffer<TileNodeComponent> placedTiles;  // Lista de las fichas colocadas en el tablero
+    public int team1Score;
+    public int team2Score;
+    public DynamicBuffer<TileNodeComponent> placedTiles;
 
 }
